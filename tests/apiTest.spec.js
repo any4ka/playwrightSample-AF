@@ -1,11 +1,12 @@
 const { test, expect } = require('@playwright/test');
 const Validator = require('jsonschema').Validator;
 
+test.describe.configure({ mode: 'parallel' });
+
 test('Random activity, validate the schema contract',
     async ({ request }) => {
         const baseURL = 'https://www.boredapi.com/api'
         const response = await request.get(`${baseURL}/activity`)
-        console.log(await response.json())
         expect(response.ok).toBeTruthy();
         expect(response.status()).toBe(200);
         var activityScema = {
@@ -17,5 +18,24 @@ test('Random activity, validate the schema contract',
             'key': { 'type': 'number' }
         }
         var v = new Validator();
-        console.log(response.json(), activityScema)
+        expect(response.json(), activityScema).toBeTruthy
     })
+test('Random Activity - Test exact JSON', async ({ request }) => {
+    const baseURL = 'https://www.boredapi.com/api'
+    var key = 6706598
+    var validateJSON = {
+        "activity": "Learn the NATO phonetic alphabet",
+        "type": "education",
+        "participants": 1,
+        "price": 0,
+        "link": "https://en.wikipedia.org/wiki/NATO_phonetic_alphabet",
+        "key": "6706598",
+        "accessibility": 0
+    }
+    console.log(`${baseURL}/activity?key=${key}`)
+    const response2 = await request.get(`${baseURL}/activity?key=${key}`)
+    console.log((await response2).json())
+    expect(await response2.ok).toBeTruthy();
+    expect(await response2.status()).toBe(200);
+    expect(await response2.json()).toStrictEqual(validateJSON)
+})

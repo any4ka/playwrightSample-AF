@@ -1,7 +1,10 @@
 const { test, expect } = require('@playwright/test');
 const { RedEyeSafety_PO } = require('../common/redEyeSafety_PO')
 
-test('test Red Eye Safety', async ({ page }) => {
+/**
+ * Page Object Example
+ */
+test('test Red Eye Safety - Page Object Design Pattern Example', async ({ page }) => {
   const redEyeSafety_PO = new RedEyeSafety_PO(page);
   await page.goto('https://www.google.com/search?q=red+eye+safety&oq=red+eye+safety+&aqs=chrome..69i57.7190j0j2&sourceid=chrome&ie=UTF-8');
   await redEyeSafety_PO.googleResultLink.click();
