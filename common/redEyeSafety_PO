@@ -1,0 +1,33 @@
+const { expect } = require('@playwright/test');
+
+exports.RedEyeSafety_PO = class RedEyeSafety_PO {
+    /**
+       * @param {import('@playwright/test').Page} page
+       */
+    constructor(page) {
+        this.page = page;
+        this.googleResultLink = page.getByRole('link', { name: 'Red Eye Safety Red Eye Safety http://www.redeyesafety.com' });
+        this.ppeLink = page.getByRole('link', { name: 'PPE' });
+        this.safetyTrainingLink = page.getByRole('link', { name: 'Safety Training' });
+        this.drugScreening = page.getByRole('link', { name: 'Drug Screening' });
+        this.fireExtinguishersLink = page.getByRole('link', { name: 'Fire Extinguishers' });
+        this.additionalServicesLink = page.getByRole('link', { name: 'Additional Services' });
+        this.contactUsLink = page.getByRole('link', { name: 'Contact Us' });
+        this.nameField = page.getByLabel('Name: *');
+        this.emailAddressField = page.getByPlaceholder('Enter email address');
+        this.subjectLineField = page.getByLabel('Subject: *');
+        this.messageField = page.getByPlaceholder('Enter your comment here');
+
+    }
+
+    async fillOutForm(name, email, subject, message){
+        await this.nameField.click();
+        await this.nameField.fill(name);
+        await this.emailAddressField.click();
+        await this.emailAddressField.fill(email);
+        await this.subjectLineField.click();
+        await this.subjectLineField.fill(subject);
+        await this.messageField.click();
+        await this.messageField.fill(message);
+    }
+}
