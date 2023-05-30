@@ -1,8 +1,6 @@
 const { test, expect } = require('@playwright/test');
 const Validator = require('jsonschema').Validator;
 
-test.describe.configure({ mode: 'parallel' });
-
 test('Random activity, validate the schema contract',
     async ({ request }) => {
         const baseURL = 'https://www.boredapi.com/api'
@@ -32,10 +30,9 @@ test('Random Activity - Test exact JSON', async ({ request }) => {
         "key": "6706598",
         "accessibility": 0
     }
-    console.log(`${baseURL}/activity?key=${key}`)
     const response2 = await request.get(`${baseURL}/activity?key=${key}`)
-    console.log((await response2).json())
-    expect(await response2.ok).toBeTruthy();
-    expect(await response2.status()).toBe(200);
+    console.log((response2).json())
+    expect(response2.ok).toBeTruthy();
+    expect(response2.status()).toBe(200);
     expect(await response2.json()).toStrictEqual(validateJSON)
 })
